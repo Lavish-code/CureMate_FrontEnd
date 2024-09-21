@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Context } from "./main";
 import Login from "./Pages/Login";
+
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } =
     useContext(Context);
@@ -33,22 +34,25 @@ const App = () => {
       }
     };
     fetchUser();
-  }, [isAuthenticated]);
+  }, []); // Removed isAuthenticated from dependency
 
   return (
     <>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/appointment" element={<Appointment />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-        <Footer />
-        <ToastContainer position="top-center" />
-      </Router>
+      {isAuthenticated ? (
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/appointment" element={<Appointment />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+          <Footer />
+        </Router>
+      ) : (
+        <Login />
+      )}
+      <ToastContainer position="top-center" />
     </>
   );
 };
