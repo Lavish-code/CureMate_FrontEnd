@@ -34,21 +34,27 @@ const App = () => {
       }
     };
     fetchUser();
-  }, [isAuthenticated]);
+  }, []); // Removed isAuthenticated from dependency
 
   return (
-    <Router>
-      <Sidebar />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/doctor/addnew" element={<AddNewDoctor />} />
-        <Route path="/admin/addnew" element={<AddNewAdmin />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/doctors" element={<Doctors />} />
-      </Routes>
-      <ToastContainer position="top-center" />
-    </Router>
+    <>
+      {isAuthenticated ? (
+        <Router>
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/doctor/addnew" element={<AddNewDoctor />} />
+            <Route path="/admin/addnew" element={<AddNewAdmin />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/doctors" element={<Doctors />} />
+          </Routes>
+          <ToastContainer position="top-center" />
+        </Router>
+      ) : (
+        <Login />
+      )}
+    </>
   );
 };
 
